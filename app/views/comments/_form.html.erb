@@ -1,0 +1,6 @@
+<%= form_with(model: [@post, @post.comments.build]) do |form| %>
+    <div class="ripple text-cyprus border border-crush border-1 p-2">
+        <%= form.rich_text_area :comment, class: 'mt-2 mb-2' %>
+        <%= form.submit "Leave a reply", class: "btn btn-primary mt-2 mb-2" %>
+    </div>
+<% end %>

@@ -1,0 +1,39 @@
+<div class="text-cyprus">
+  <%= form_with(model: post) do |form| %>
+    <% if post.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+        <ul>
+          <% post.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class = "form-group">
+      <%= form.label :title, style: "display: block" %>
+      <%= form.text_field :title, class: 'form-control mb-2' %>
+    </div>
+
+    <div class = "form-group">
+      <%= form.label :description, style: "display: block" %>
+      <%= form.text_area :description, class: 'form-control mb-3' %>
+    </div>
+
+    <div class = "form-group">
+      <%= form.label :header_image, style: "display: block" %>
+      <%= form.file_field :header_image, class: 'form-control mb-3' %>
+      <div class="mt-1 mb-1">
+        <% if post.header_image.present? %>
+          <%= image_tag(post.header_image, width: '100%')%>
+        <% end %>
+      </div>
+    </div>
+
+    <div class = "actions">
+      <%= form.submit class: "btn btn-primary w-100" %>
+    </div>
+  <% end %>
+</div>

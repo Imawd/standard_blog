@@ -1,0 +1,7 @@
+.paragraph {
+    transition: background_color 0.5s ease;
+    &:hover {
+        background-color: #f8f9fa;
+        cursor: pointer;
+    }
+}

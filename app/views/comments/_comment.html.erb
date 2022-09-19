@@ -1,0 +1,10 @@
+<div class = "container mt-4 text-cyprus ripple border border-crush border-1" style = "padding: 1em;">
+    <span> Posted <%= time_ago_in_words(comment.created_at) %> ago by <%= comment.author.present? ? comment.author.email : 'anon' %> </span>
+    <% if current_author == comment.try(:author) %>
+        <div class = "button-group float-end">
+            <%= button_to "Delete", [post, comment], class:"btn btn-primary btn-sm align-center", method: :delete %>
+        </div>
+    <% end %>
+    <hr />
+    <%= comment.comment %>
+</div>

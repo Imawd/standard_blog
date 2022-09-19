@@ -1,0 +1,28 @@
+<h1 class="m-3 mb-4">Feed</h1>
+
+
+    <% @posts.each do |post|%>
+        <div class='card mb-3 m-3 ripple post'>
+            <div class='card-body ripple post'>
+                <div class= "row">
+                    <div class= 'col-md-2'>
+                        <% if post.header_image.present? %>
+                            <%= link_to view_path(post), class: 'text-decoration-none' do %>
+                            <div class= 'header-img' style="background-image: url(<%= url_for(post.header_image) %>);"></div>
+                            <% end %>
+                        <% end %>
+                    </div>
+
+                    <div class= 'col-md-8'>
+                        <%= link_to view_path(post), class: 'text-decoration-none' do %>
+                            <h5 class='card-title text-cyprus'><%= post.title %></h5>
+                            <p class= 'text-seafloor'><%= post.description %></p>
+                            <p class="align-bottom text-secondary"><span> Posted <%= time_ago_in_words(post.created_at) %> ago by <%= post.author.present? ? post.author.email : 'anon' %> </span>  </p>
+                        <% end %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <% end %>
+
+

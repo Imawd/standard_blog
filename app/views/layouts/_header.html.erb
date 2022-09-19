@@ -1,0 +1,29 @@
+<nav class="navbar navbar-expand-lg navbar-light crush fixed-top">
+  <div class="container">
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item active">
+          <%= link_to "Home", home_index_path, class: "nav-link remove-submit-btn-style text-ripple" %>
+        </li>
+        <% if author_signed_in? %>
+            <li class="nav-item">
+                <%= link_to "My Posts", posts_path, class: "nav-link remove-submit-btn-style text-ripple" %>
+            </li>
+            <li class="nav-item">
+                <%= button_to "Sign out", destroy_author_session_path, :method => :delete, class:"nav-link remove-submit-btn-style text-ripple", data:{turbo:false} %>
+            </li>
+            <% else %>
+            <li class="nav-item">
+                <%= button_to "Sign up", new_author_registration_path, class:"nav-link remove-submit-btn-style text-ripple" %>
+            </li>
+            <li class="nav-item">
+                <%= button_to "Sign in", author_session_path, class:"nav-link remove-submit-btn-style text-ripple" %>
+            </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+

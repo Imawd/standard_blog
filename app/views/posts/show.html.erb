@@ -1,0 +1,39 @@
+<h2> <%= @post.title %></h2>
+<h6> Posted <%= time_ago_in_words(@post.created_at) %> ago by <%= @post.author.email %> </h6>
+
+<% if @post.errors.any? %>
+    <div class="alert alert-error">
+        <% @post.errors.full_messages.join(",") %>
+    </div>
+<% end %>
+
+
+<% @post.elements.each do |element| %>
+    <% if element.element_type == "paragraph" %>
+        <p> <%= element.content %> </p>
+    <% elsif element.image? %>
+        <% if element.image.present? %>
+            <div class= "img">
+              <p><%= image_tag(element.image) %></p>
+            </div>
+        <% end %>
+    <% end %>
+<% end %>
+
+<div>
+    <hr class="dashed">
+    <h5><strong><%= @post.comments.count %></strong> Comments</h5>
+
+    <div>
+        <h3>Leave a reply</h3>
+        <%= render 'comments/form' %>
+    </div>
+
+    <% if @post.comments.count > 0 %>
+        <% @comments.each do |comment| %>
+            <% if comment.persisted? %>
+                <%= render 'comments/comment', post: @post, comment: comment %>
+            <% end %>
+        <% end %>
+    <% end %>
+</div>

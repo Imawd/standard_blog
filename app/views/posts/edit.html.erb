@@ -1,0 +1,82 @@
+<div class="row">
+  <div class="col-md-3">
+    <%= link_to 'Back', posts_path, class: 'btn btn-primary mb-3'%>
+    <div class="card ripple">
+      <div class="card-body ripple">
+        <h4 class = 'card-title text-cyprus'> Editing Posts </h4>
+        <%= render 'form', post: @post, class:"text-cyprus ripple" %>
+      </div>
+    </div>
+  </div>
+  <div class= "col-md-8">
+    <div>
+      <%= form_with(model: [@post, @paragraph]) do |form| %>
+        <%= form.hidden_field :element_type, value: 'paragraph' %>
+        <%= form.submit "Paragraph", class: "mt-3 btn btn-primary mb-3" %>
+      <% end %>
+
+      <%= form_with(model: [@post, @image]) do |form| %>
+        <%= form.hidden_field :element_type, value: 'image' %>
+        <%= form.submit "Image", class: "btn btn-primary mb-3" %>
+      <% end %>
+    </div>
+    <div class="card p-3 ripple text-cyprus">
+      <h5> Post Preview </h5>
+      <hr />
+      <h2> <%= @post.title %></h2>
+
+      <% @post.elements.each do |element| %>
+          <% if element.persisted?%>
+            <% if element.paragraph? %>
+              <%= element.content %>
+            <% elsif element.image? %>
+              <% if element.image.present? %>
+                <div class = "img">
+                  <%= image_tag(element.image) %>
+                </div>
+              <% end %>
+            <% end %>
+          <% end %>
+      <% end %>
+    </div>
+
+      <% @post.elements.each do |element| %>
+        <% if element.persisted? %>
+          <% if element.paragraph? %>
+            <div class = "card mb-3 editCard mt-3">
+              <div class = "card-body">
+                  <%= form_with(model: [@post, element]) do |form| %>
+                    <%= form.rich_text_area :content, class: 'mt-2 mb-2' %>
+                    <%= form.submit "Save", class: " btn btn-primary btn-sm" %>
+                  <% end %>
+                  <%= button_to 'Delete', post_element_path(@post, element), method: :delete, class: 'mt-1 mb-2 btn btn-sm btn-danger', data: { confirm: "Are you sure?" } %>
+                  </div>
+              </div>
+            </div>
+          <% elsif element.image? %>
+            <div class= "card mb-3 editCard">
+              <div class= "card-body">
+                  <% if element.image.present? %>
+                    <div class= "img">
+                      <%= image_tag(element.image)  %>
+                    </div>
+                    <div class="button-container text-center">
+                      <%= button_to 'Delete', post_element_path(@post, element), method: :delete, class: 'mt-1 mb-2 btn btn-danger button-in-container', data: { confirm: "Are you sure?" } %>
+                    </div>
+                  </div>
+                  <% else %>
+                    <%= form_with(model: [@post, element]) do |form| %>
+                      <%= form.file_field :image %>
+                      <%= form.submit "Save", class: "m-3 btn btn-primary" %>
+                    <% end %>
+                  <%= button_to 'Delete', post_element_path(@post, element), method: :delete, class: ' btn btn-danger', data: { confirm: "Are you sure?" } %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      <% end %>
+  </div>
+</div>
+<body class= 'bg-light'></body>
